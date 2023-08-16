@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+ <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bootstrap Form</title>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<h2>User Registration Form</h2>
+		
+		<form th:object="${student}" method="post">
+			
+			<div class="form-group">
+				<label for="userId">User ID:</label>
+				<input th:field="*{id}"  type="text" class="form-control" id="userId"
+					placeholder="Enter user ID" />
+			</div>
+			
+			<div class="form-group">
+				<label for="password">Password:</label>
+				<input th:field="*{password}"   class="form-control"
+					id="password" placeholder="Enter password" />
+			</div>
+			<div class="form-group">
+				<label for="fullName">Full Name:</label>
+				<input th:field="*{fullname}"  type="text" class="form-control"
+					id="fullName" placeholder="Enter full name" />
+			</div>
+			<div class="form-group">
+				<label for="email">Email:</label>
+				<input  th:field="*{email}" type="email" class="form-control"
+					id="email" placeholder="Enter email" />
+			</div>
+			<input th:field="*{admin}" value="true" type="radio">Admin
+			<input th:field="*{admin}" value="false" type="radio">User <br>
+			<button type="submit" th:formaction="@{/student/create}"
+				class="btn btn-primary">Create</button>
+			<button type="submit" th:formaction="@{|/student/update/${key}|}"
+				class="btn btn-secondary">Update</button>
+			<button type="submit" th:formaction="@{|/student/delete/${key}|}"
+				class="btn btn-danger">Delete</button>
+			<button type="submit" th:formaction="@{/student/index}" class="btn btn-info">Reset</button>
+
+		</form>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>User ID</th>
+					<th>Full Name</th>
+					<th>Email</th>
+					<th>Password</th>
+					<th>Role</th>
+					<th>Edit</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+					<tr th:each="entry: ${items}" th:object="${entry.value}">
+						<td>[[*{id}]]</td>
+						<td>[[*{Fullname}]]</td>
+						<td>[[*{email}]]</td>
+						<td>[[*{password}]]</td>
+						<td>[[*{admin}]]</td>
+
+						<td>
+							<a th:href="@{|/student/edit/${entry.key}|}">Edit</a>
+							
+						</td>
+						<td>
+						<a th:href="@{|/student/delete/${entry.key}|}">Delete</a></td>
+					</tr>
+		
+
+			</tbody>
+		</table>
+	</div>
+
+
+	<!-- Add Bootstrap JS -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>
